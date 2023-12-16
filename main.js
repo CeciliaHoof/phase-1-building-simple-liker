@@ -3,6 +3,31 @@ const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
+let modal = document.querySelector('#modal')
+modal.classList.add('hidden');
+const heartsArr = document.querySelectorAll('.like-glyph');
+mimicServerCall(url="http://mimicServer.example.com", config={})
+  .then((resp) => console.log(resp))
+  .catch(() => {
+    modal.classList.remove('hidden');
+    modal.textContent = "Random server error. Try again.";
+    setTimeout(() => {
+       document.querySelector('#modal').classList.add('hidden');
+     }, 3000);
+  })
+  .finally(() => {
+    heartsArr.forEach((element) => element.addEventListener('click', function() {
+      if (element.textContent === EMPTY_HEART){
+        element.textContent = FULL_HEART;
+        element.classList.add('activated-heart')
+      }
+      else if (element.textContent === FULL_HEART)
+      {
+        element.textContent = EMPTY_HEART;
+        element.classList.remove('activated-heart')
+      }
+    }))
+  })
 
 
 
