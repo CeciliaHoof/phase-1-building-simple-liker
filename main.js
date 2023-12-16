@@ -7,15 +7,8 @@ let modal = document.querySelector('#modal')
 modal.classList.add('hidden');
 const heartsArr = document.querySelectorAll('.like-glyph');
 mimicServerCall(url="http://mimicServer.example.com", config={})
-  .then((resp) => console.log(resp))
-  .catch(() => {
-    modal.classList.remove('hidden');
-    modal.textContent = "Random server error. Try again.";
-    setTimeout(() => {
-       document.querySelector('#modal').classList.add('hidden');
-     }, 3000);
-  })
-  .finally(() => {
+  .then((resp) => {
+    console.log(resp)
     heartsArr.forEach((element) => element.addEventListener('click', function() {
       if (element.textContent === EMPTY_HEART){
         element.textContent = FULL_HEART;
@@ -27,6 +20,14 @@ mimicServerCall(url="http://mimicServer.example.com", config={})
         element.classList.remove('activated-heart')
       }
     }))
+  })
+  .catch((error) => {
+    console.error(error)
+    modal.classList.remove('hidden');
+    modal.textContent = "Random server error. Try again.";
+    setTimeout(() => {
+       document.querySelector('#modal').classList.add('hidden');
+     }, 3000);
   })
 
 
